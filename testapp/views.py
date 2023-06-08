@@ -32,20 +32,20 @@ def callback(request):
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
                     mtext = event.message.text
-                    if mtext == '@傳送文字':
+                    if mtext == '@你是什麼':
                         sendText(event)
 
-                    elif mtext == '@傳送圖片':
-                        sendImage(event)    
+                    # elif mtext == '@傳送圖片':
+                    #     sendImage(event)    
 
-                    elif mtext == '@傳送貼圖':
-                        sendStick(event) 
+                    # elif mtext == '@傳送貼圖':
+                    #     sendStick(event) 
 
-                    elif mtext == '@多項傳送':
-                        sendMulti(event) 
+                    # elif mtext == '@多項傳送':
+                    #     sendMulti(event) 
                     
-                    elif mtext == '@傳送位置':
-                        sendPosition(event) 
+                    # elif mtext == '@傳送位置':
+                    #     sendPosition(event) 
 
 
                     
@@ -76,17 +76,17 @@ def callback(request):
 
 
 
-                    elif mtext == '@購買披薩':
-                        sendPizza(event)
+                    # elif mtext == '@購買披薩':
+                    #     sendPizza(event)
 
-                    elif mtext == '@確認樣板':
-                        sendConfirm(event)
+                    # elif mtext == '@確認樣板':
+                    #     sendConfirm(event)
 
-                    elif mtext == '@yes':
-                        sendYes(event)
+                    # elif mtext == '@yes':
+                    #     sendYes(event)
 
-                    elif mtext == '@no':
-                        sendNo(event)
+                    # elif mtext == '@no':
+                    #     sendNo(event)
 
 
 
@@ -98,10 +98,26 @@ def callback(request):
                         sendCarousel(event)
                         
 
+
                     elif mtext == '@圖片轉盤':
                         sendImgCarousel(event)  
 
+                    elif mtext == '@菜譜推薦':
+                        sendImgCarousel(event) 
+
+
+
+
                     elif mtext == '@彈性':
+                        sendFlex(event)
+
+                    elif mtext == '@自我介紹':
+                        sendFlex(event)
+
+                    elif mtext == '@名片':
+                        sendFlex(event)
+
+                    elif mtext == '@營業時間':
                         sendFlex(event)
 
                     else:
@@ -214,15 +230,15 @@ def sendQuickreply(event): #快速選單
 #     except:
 #         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
-# def sendVideo(event): #影片
-#     try:
-#         message = VideoSendMessage(
-#             original_content_url='https://748c-140-135-112-179.ngrok.io/static/robot.mp4',
-#             preview_image_url='https://748c-140-135-112-179.ngrok.io/static/robot.jpg'
-#         )
-#         line_bot_api.reply_message(event.reply_token,message)
-#     except:
-#         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
+def sendVideo(event): #影片
+    try:
+        message = VideoSendMessage(
+            original_content_url='https://youtu.be/nqY3tv-y62A',
+            preview_image_url='https://media.tenor.com/p98d_YNK3K8AAAAC/gordon-ramsay-idiot-sandwich.gif'
+        )
+        line_bot_api.reply_message(event.reply_token,message)
+    except:
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
 def sendButton(event): # 按鈕
     try:
@@ -240,11 +256,8 @@ def sendButton(event): # 按鈕
                     URITemplateAction( # 開啟網頁
                         label='查看教學影片',
                         uri='https://youtu.be/0NZvuPH1D60',
-                    ),
-                    URITemplateAction( # 開啟網頁
-                        label='購買食譜',
-                        uri='https://www.books.com.tw/products/0010943417',
                     )
+
                 ]
             )
         )
@@ -436,9 +449,9 @@ def sendFlex(event):
             direction = 'ltr',
             header = BoxComponent(
                 layout = 'vertical',
-                background_color='#101935',
+                background_color='#FFFCF7',
                 contents =[
-                    TextComponent(text = 'KS菜譜機械人', color='#F2FDFF', weight='bold', size = 'xxl',),
+                    TextComponent(text = 'KS菜譜機械人', color='#91612F', weight='bold', size = 'xxl',),
                 ]
             ),
             hero = ImageComponent(
@@ -469,7 +482,7 @@ def sendFlex(event):
                             BoxComponent(
                                 layout='baseline',
                                 contents=[
-                                    TextComponent(text='營頁時間',color='#aaaaaa', size='sm', flex=2),
+                                    TextComponent(text='營業時間',color='#aaaaaa', size='sm', flex=2),
                                     TextComponent(text="10:00 - 18:00",color='#666666', size='sm', flex=5),
                                 ],
                             ),
@@ -483,7 +496,7 @@ def sendFlex(event):
                             ButtonComponent(
                                 style='primary',
                                 height='sm',
-                                action=URIAction(label='電話聯絡',uri='tel:0979600347'),
+                                action=URIAction(label='電話聯絡',uri='tel:097878787'),
                             ),
                             ButtonComponent(
                                 style='secondary',
