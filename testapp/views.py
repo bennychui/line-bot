@@ -412,7 +412,7 @@ def sendImgCarousel(event):
                     ImageCarouselColumn(
                         image_url='https://cdn.kobo.com/book-images/8065b67f-4c7c-4922-9694-68bc8bb3c211/353/569/90/False/mess-tin.jpg',
                         action=URIAction(
-                            label='Miss Tin ✌炊料理',
+                            label='Miss Tin✌炊料理',
                             uri='https://www.books.com.tw/products/E050127043'
                         )
                     )
