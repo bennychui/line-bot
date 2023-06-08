@@ -35,6 +35,10 @@ def callback(request):
                     if mtext == '@你是什麼':
                         sendText(event)
 
+                    elif mtext == '@你是誰':
+                        sendText(event)
+
+
                     # elif mtext == '@傳送圖片':
                     #     sendImage(event)    
 
