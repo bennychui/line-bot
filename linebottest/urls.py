@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from testapp.views import callback
 
+
+
 urlpatterns = [
     path('callback', callback),
     path('admin/', admin.site.urls),

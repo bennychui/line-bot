@@ -4,9 +4,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from testapp.models import student 
 
+
 from linebot import LineBotApi , WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
-from linebot.models import MessageEvent, TextMessage , TextSendMessage, AudioSendMessage, VideoSendMessage, TemplateSendMessage, ButtonsTemplate, MessageTemplateAction, URITemplateAction, PostbackTemplateAction, PostbackEvent, PostbackTemplateAction,ImageSendMessage, StickerSendMessage, LocationSendMessage, QuickReply, QuickReplyButton, MessageAction, ConfirmTemplate, CarouselTemplate, CarouselColumn, ImageCarouselTemplate, ImageCarouselColumn, URIAction
+from linebot.models import MessageEvent, TextMessage , TextSendMessage, AudioSendMessage, VideoSendMessage, TemplateSendMessage, ButtonsTemplate, MessageTemplateAction, URITemplateAction, PostbackTemplateAction, PostbackEvent, PostbackTemplateAction,ImageSendMessage, StickerSendMessage, LocationSendMessage, QuickReply, QuickReplyButton, MessageAction, ConfirmTemplate, CarouselTemplate, CarouselColumn, ImageCarouselTemplate, ImageCarouselColumn, URIAction, BubbleContainer
+from linebot.models import ImageComponent, BoxComponent, TextComponent, IconComponent, ButtonComponent, SeparatorComponent, FlexSendMessage
+
 from urllib.parse import parse_qsl 
 # Create your views here.
 
@@ -98,6 +101,9 @@ def callback(request):
                     elif mtext == '@圖片轉盤':
                         sendImgCarousel(event)  
 
+                    elif mtext == '@彈性':
+                        sendFlex(event)
+
                     else:
                         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))      
         
@@ -141,24 +147,24 @@ def sendText(event): #文字
 #     except:
 #         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
-def sendMulti(event): #多項傳送
-    try:
-        message = [  #串列
-            StickerSendMessage(  #貼圖
-                package_id = '1',
-                sticker_id = '2'
-            ),
-            TextSendMessage(  #文字
-                text = "這是Pizza 圖片!"
-            ),
-            ImageSendMessage(   #圖片
-                original_content_url = 'https://748c-140-135-112-179.ngrok.io/static/4QfKuz1.png',
-                preview_image_url = 'https://748c-140-135-112-179.ngrok.io/static/4QfKuz1.png'
-            )
-        ]
-        line_bot_api.reply_message(event.reply_token,message)
-    except:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
+# def sendMulti(event): #多項傳送
+#     try:
+#         message = [  #串列
+#             StickerSendMessage(  #貼圖
+#                 package_id = '1',
+#                 sticker_id = '2'
+#             ),
+#             TextSendMessage(  #文字
+#                 text = "這是Pizza 圖片!"
+#             ),
+#             ImageSendMessage(   #圖片
+#                 original_content_url = 'https://748c-140-135-112-179.ngrok.io/static/4QfKuz1.png',
+#                 preview_image_url = 'https://748c-140-135-112-179.ngrok.io/static/4QfKuz1.png'
+#             )
+#         ]
+#         line_bot_api.reply_message(event.reply_token,message)
+#     except:
+#         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
 def sendPosition(event): #位置
     try: 
@@ -198,25 +204,25 @@ def sendQuickreply(event): #快速選單
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
 
-def sendVoice(event): #聲音
-    try:
-        message = AudioSendMessage(
-            original_content_url='https://748c-140-135-112-179.ngrok.io/static/mario.m4a',
-            duration=20000
-        )
-        line_bot_api.reply_message(event.reply_token,message)
-    except:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
+# def sendVoice(event): #聲音
+#     try:
+#         message = AudioSendMessage(
+#             original_content_url='https://748c-140-135-112-179.ngrok.io/static/mario.m4a',
+#             duration=20000
+#         )
+#         line_bot_api.reply_message(event.reply_token,message)
+#     except:
+#         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
-def sendVideo(event): #影片
-    try:
-        message = VideoSendMessage(
-            original_content_url='https://748c-140-135-112-179.ngrok.io/static/robot.mp4',
-            preview_image_url='https://748c-140-135-112-179.ngrok.io/static/robot.jpg'
-        )
-        line_bot_api.reply_message(event.reply_token,message)
-    except:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
+# def sendVideo(event): #影片
+#     try:
+#         message = VideoSendMessage(
+#             original_content_url='https://748c-140-135-112-179.ngrok.io/static/robot.mp4',
+#             preview_image_url='https://748c-140-135-112-179.ngrok.io/static/robot.jpg'
+#         )
+#         line_bot_api.reply_message(event.reply_token,message)
+#     except:
+#         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
 def sendButton(event): # 按鈕
     try:
@@ -256,56 +262,56 @@ def sendButton(event): # 按鈕
 #     except:
 #         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
-def sendBack_buy(event, backdata): #處理Poskback
-    try:
-        text1 = '感謝您購買披薩，'
-        text1 += '\n我們將盡快為您製作。'
-        message = TextSendMessage(
-            text = text1
-        )
-        line_bot_api.reply_message(event.reply_token,message)
-    except:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
+# def sendBack_buy(event, backdata): #處理Poskback
+#     try:
+#         text1 = '感謝您購買披薩，'
+#         text1 += '\n我們將盡快為您製作。'
+#         message = TextSendMessage(
+#             text = text1
+#         )
+#         line_bot_api.reply_message(event.reply_token,message)
+#     except:
+#         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
-def sendConfirm(event): #確認樣板
-    try:
-        message = TemplateSendMessage(
-            alt_text = '確認樣板',
-            template = ConfirmTemplate(
-                text = '你確定要購買這項商品嗎?',
-                actions=[
-                    MessageTemplateAction(
-                        label='是',
-                        text='@yes'
-                    ),
-                    MessageTemplateAction(
-                        label='否',
-                        text='@no'
-                    )
-                ]
-            )
-        )
-        line_bot_api.reply_message(event.reply_token,message)
-    except:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
+# def sendConfirm(event): #確認樣板
+#     try:
+#         message = TemplateSendMessage(
+#             alt_text = '確認樣板',
+#             template = ConfirmTemplate(
+#                 text = '你確定要購買這項商品嗎?',
+#                 actions=[
+#                     MessageTemplateAction(
+#                         label='是',
+#                         text='@yes'
+#                     ),
+#                     MessageTemplateAction(
+#                         label='否',
+#                         text='@no'
+#                     )
+#                 ]
+#             )
+#         )
+#         line_bot_api.reply_message(event.reply_token,message)
+#     except:
+#         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
-def sendYes(event):
-    try:
-        message = TextSendMessage(
-            text = '感謝你的購買，\n我們將盡快送出商品。',
-        )
-        line_bot_api.reply_message(event.reply_token,message)
-    except:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
+# def sendYes(event):
+#     try:
+#         message = TextSendMessage(
+#             text = '感謝你的購買，\n我們將盡快送出商品。',
+#         )
+#         line_bot_api.reply_message(event.reply_token,message)
+#     except:
+#         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
-def sendNo(event):
-    try:
-        message = TextSendMessage(
-            text = '沒關係，\n請您重新操作。',
-        )
-        line_bot_api.reply_message(event.reply_token,message)
-    except:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
+# def sendNo(event):
+#     try:
+#         message = TextSendMessage(
+#             text = '沒關係，\n請您重新操作。',
+#         )
+#         line_bot_api.reply_message(event.reply_token,message)
+#     except:
+#         line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
 
 def sendCarousel(event):
     try:
@@ -335,7 +341,7 @@ def sendCarousel(event):
                     CarouselColumn(
                         thumbnail_image_url='https://tokyo-kitchen.icook.network/uploads/recipe/cover/375227/2f5f0e2d8f577a65.jpg',
                         title = '甜',
-                        text = '🍍🍍🍍🍍🍍🍍🍍🍍🍍!',
+                        text = '🍍🍍🍍🍍🍍🍍🍍🍍🍍！',
                         actions=[
                             URITemplateAction(
                                 label='左宗棠雞🐔🥡',
@@ -422,6 +428,85 @@ def sendImgCarousel(event):
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='發生錯誤!'))
+
+
+def sendFlex(event):
+    try:
+        bubble = BubbleContainer(
+            direction = 'ltr',
+            header = BoxComponent(
+                layout = 'vertical',
+                background_color='#101935',
+                contents =[
+                    TextComponent(text = 'KS菜譜機械人', color='#F2FDFF', weight='bold', size = 'xxl',),
+                ]
+            ),
+            hero = ImageComponent(
+                url='https://ibw.bwnet.com.tw/image/pool/2015/05/c02d89979032306a89ee07d66c70f89f.jpg',   #圖片
+                size = 'full',
+                aspect_ratio='792:555',
+                aspect_mode='cover',
+            ),
+            body = BoxComponent(
+                layout= 'vertical',
+                contents=[
+                     TextComponent(text = '一個根據你的口味推薦食譜的機器人', size='md'),
+                    # BoxComponent(
+                    #     layout='baseline',
+                    #     margin='md',
+                    #     contents=[
+                    #         IconComponent(size='lg', url='https://cs-f.ecimg.tw/items/DJAO21A900FTSLZ/000001_1670496024.jpg'),
+                    #         TextComponent(text='25   ', size='sm', color='#999999', flex=0),
+                    #         IconComponent(size='lg', url='https://cs-f.ecimg.tw/items/DJAO21A900FTSLZ/000001_1670496024.jpg'),
+                    #         TextComponent(text='14   ', size='sm', color='#999999', flex=0),
+                    #     ]
+                    # ),
+                    BoxComponent(
+                        layout='vertical',
+                        margin='lg',
+                        contents=[
+                        SeparatorComponent(color='#0000ff'),
+                            BoxComponent(
+                                layout='baseline',
+                                contents=[
+                                    TextComponent(text='營頁時間',color='#aaaaaa', size='sm', flex=2),
+                                    TextComponent(text="10:00 - 18:00",color='#666666', size='sm', flex=5),
+                                ],
+                            ),
+                        ],   
+                    ),
+
+                    BoxComponent(
+                        layout='horizontal',
+                        margin='xxl',
+                        contents=[
+                            ButtonComponent(
+                                style='primary',
+                                height='sm',
+                                action=URIAction(label='電話聯絡',uri='tel:0979600347'),
+                            ),
+                            ButtonComponent(
+                                style='secondary',
+                                height='sm',
+                                action=URIAction(label='查看網頁',uri="https://icook.tw/")
+                            )
+                        ]
+                    )
+                ],
+            ),
+            footer=BoxComponent(
+                layout='vertical',
+                contents=[
+                    TextComponent(text='Kingsman菜譜機械人 2023',color='#888888', size='sm', align='center'),
+                ]
+            )
+        )
+        message = FlexSendMessage(alt_text="彈性",contents=bubble)
+        line_bot_api.reply_message(event.reply_token, message)
+    except:
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='發生錯誤!'))
+
+
 
 
 
