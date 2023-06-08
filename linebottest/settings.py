@@ -21,9 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%6k&2+gj36%(aalkdu^s(i)7t82op(dzw#4j+pr8(!#*=6*1#l'
-LINE_CHANNEL_ACCESS_TOKEN='D0cXI8O6+dHwMYpl+ohzrBbGgKEV3wt9tjEhFFAuLpPQz+0S9VqcEaRwDYtj6XFx1mAfEEZLOfIREJo7Q4sahdSGusXqxJHsIbxkoX8/P4dHdrCtjA0CMBL8JjzLFflSOciBN1LCEi7Npeg2c9XvmQdB04t89/1O/w1cDnyilFU='
-LINE_CHANNEL_SECRET='605a3da06b6cfac385219ad8def0f810'
+SECRET_KEY = 'django-insecure-@k0--!offf3guh%cz#+pb*#f12hz7i#f0skj0$+gpervv3rp(u'
+
+LINE_CHANNEL_ACCESS_TOKEN='57G9xo33ix42/wfO/CQGd1yEHdLmFxmQEhbVDBimhAOAZTLAHGxUip6Yc+d1t105OhG74ZwsQ6J3HACcsN0SOk5P/EpfKTJH8WYoBtZg7qAi+hgT4il0XsfKzxyBqv0XqnVHCYvAfePu/Hpd3Ss1dAdB04t89/1O/w1cDnyilFU='
+LINE_CHANNEL_SECRET='a858f3087729ae08badf2d8b5c2eaa40'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'linebottest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -106,9 +107,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'zh-hant'
+LANGUAGE_CODE = 'zh-Hant'
 
-TIME_ZONE = 'asia/taipei'
+TIME_ZONE = 'Asia/Taipei'
 
 USE_I18N = True
 
@@ -121,7 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS=[os.path.join(BASE_DIR, 'static'),]
+STATICFILES_DIRS=[os.path.join(BASE_DIR,'static'),]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

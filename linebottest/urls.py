@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from testapp.views import callback, listone, listall
+from testapp.views import callback
+
 
 urlpatterns = [
     url('^callback',callback),
-    url(r'^listone$',listone),
-    url(r'^listall$',listall),
+
+
     path('admin/', admin.site.urls),
 
 ]
