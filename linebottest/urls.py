@@ -15,14 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url
 from testapp.views import callback
 
-
 urlpatterns = [
-    url('^callback',callback),
-
-
+    path('callback', callback),
     path('admin/', admin.site.urls),
-
 ]
+

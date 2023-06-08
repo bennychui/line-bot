@@ -88,16 +88,16 @@ def callback(request):
     else:
         return HttpResponseBadRequest()
 
-# def listone(request):
+ #def listone(request):
 #     try:
-#         unit=student.objects.get(sName=" hihi ")
-#     except:
-#         errormessage="讀取錯誤"
-#     return render (request,"listone.html",locals())
+#        unit=student.objects.get(sName=" hihi ")
+ #    except:
+  #       errormessage="讀取錯誤"
+   #  return render (request,"listone.html",locals())
 
-# def listall(request):
-#     allstudents = student.objects.all().order_by('id')
-#     return render (request,"listall.html",locals())
+ #def listall(request):
+  #   allstudents = student.objects.all().order_by('id')
+   #  return render (request,"listall.html",locals())
 
 def sendVoice(event): #發出聲音
     try:
