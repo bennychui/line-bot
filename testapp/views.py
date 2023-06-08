@@ -135,11 +135,12 @@ def callback(request):
 def sendText(event): #文字
     try:
         message = TextSendMessage(
-            text = "我是KingSman菜譜機械人 ，\n您好!"                         #自我介紹
+            text = "您好!，\n我是KingSman菜譜機械人 ，\n我們今日都會推薦不同風味的菜式，供大家參考喔。\n歡迎嘗試體驗其他功能喔",
         )
-        line_bot_api.reply_message(event.reply_token,message)
+        line_bot_api.reply_message(event.reply_token, message)
     except:
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='發生錯誤!'))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text='發生錯誤!'))
+
 
 
 # def sendImage(event): #圖片
@@ -201,16 +202,16 @@ def sendQuickreply(event): #快速選單
             quick_reply = QuickReply(
                 items = [
                     QuickReplyButton(
-                        action = URIAction(label="酸", uri='https://www.518.com.tw/article/1850')
+                        action = URIAction(label="中式", uri='https://icook.tw/search/%E4%B8%AD%E5%BC%8F%E6%96%99%E7%90%86/')
                     ),
                     QuickReplyButton(
-                        action = URIAction(label="甜", uri='https://icook.tw/recipes/409877')
+                        action = URIAction(label="日式", uri='https://icook.tw/categories/60')
                     ),
                     QuickReplyButton(
-                        action = URIAction(label="苦", uri='https://zineblog.com.tw/blog/post/210528')
+                        action = URIAction(label="法式", uri='https://icook.tw/categories/68')
                     ),
                     QuickReplyButton(
-                        action = URIAction(label="辣", uri='https://www.wecook123.com/recipe633/')
+                        action = URIAction(label="意式", uri='https://icook.tw/categories/63')
                     ),
                 ]
             )
